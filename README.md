@@ -4,7 +4,7 @@ Real-time face recognition and people-counting for a room, running on a single N
 
 The face encoder is a custom CNN I trained from scratch on 192,000 face images using triplet loss. It outputs 512-dimensional embeddings matched with cosine similarity.
 
-![Dashboard](https://user-images.githubusercontent.com/placeholder/dashboard.png)
+![Dashboard](assets/dashboard.png)
 
 ---
 
