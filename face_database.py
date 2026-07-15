@@ -29,6 +29,10 @@ class FaceDatabase:
                 return json.load(f)
         return {}
 
+    def reload(self):
+        """Reload database from disk — call after enrollment to pick up new faces."""
+        self.data = self._load()
+
     def _save(self):
         with open(self.db_path, "w") as f:
             json.dump(self.data, f, indent=2)

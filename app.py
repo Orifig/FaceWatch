@@ -79,6 +79,14 @@ def recognition_loop():
     """
     logger.info("Recognition loop started")
     loop_count = 0
+    last_db_reload = 0
+
+    while state.running:
+        # Reload database every 2 seconds to pick up new enrollments
+        now = time.time()
+        if now - last_db_reload > 2.0:
+            db.reload()
+            last_db_reload = now
 
     while state.running:
         for cam_id in list(camera_manager.streams.keys()):
@@ -118,6 +126,7 @@ def recognition_loop():
                             state.enrollment_state.complete = True
                             state.enrollment_state.capturing = False
                             ptz_manager.resume_after_enrollment(cam_id)
+                            db.reload()  # Instantly pick up new face
                             logger.info(f"Enrollment complete: {state.enrollment_state.name}")
 
                 results.append({
@@ -383,6 +392,7 @@ async def enroll_frame(req: EnrollFrameRequest):
     if req.name not in db.data:
         db.add_person(req.name)
     db.add_embedding(req.name, embedding)
+    db.reload()  # Instantly available for recognition
 
     count = db.data[req.name]["sample_count"]
     return {"status": "captured", "captured": count, "confidence": round(float(largest["confidence"]), 3)}
