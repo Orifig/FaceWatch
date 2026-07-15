@@ -487,11 +487,6 @@ async def root():
     return HTMLResponse("<h1>FaceWatch — dashboard.html not found</h1>")
 
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")
-
-
 # ============================================================================
 # SETUP PAGE ENDPOINTS
 # ============================================================================
@@ -567,3 +562,10 @@ async def test_ptz_connection(body: dict):
         return {"ok": False, "error": "onvif-zeep not installed — run: pip install onvif-zeep"}
     except Exception as e:
         return {"ok": False, "error": str(e)}
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")
+
+
