@@ -13,7 +13,7 @@ MODELS_DIR = Path("./models")
 MODELS_DIR.mkdir(exist_ok=True)
 
 YUNET_URL = (
-    "https://github.com/opencv/opencv_zoo/raw/master/"
+    "https://github.com/opencv/opencv_zoo/raw/main/"
     "models/face_detection_yunet/face_detection_yunet_2023mar.onnx"
 )
 YUNET_PATH = MODELS_DIR / "face_detection_yunet_2023mar.onnx"

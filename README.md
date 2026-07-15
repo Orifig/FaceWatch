@@ -50,9 +50,15 @@ Downloads YuNet into `./models/`. Then grab `face_encoder.pth` from the [release
 
 ### 3. Configure cameras and PTZ
 
-On first run, go to `http://localhost:8000/setup` and fill in your camera IPs, credentials, and ONVIF details. This saves a `config.json` that the app reads on startup — no code editing needed.
+Run the app first:
 
-### 4. Run
+```bash
+python3 app.py
+```
+
+Then open `http://localhost:8000/setup` (or `http://JETSON_IP:8000/setup` from another device). Fill in your camera RTSP URLs, credentials, and PTZ details. Hit Save — it writes a `config.json` and redirects you to the dashboard. You only need to do this once.
+
+### 4. Download models
 
 ```bash
 python3 app.py
