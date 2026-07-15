@@ -1,0 +1,7 @@
+face_database.json
+models/
+*.pth
+*.onnx
+__pycache__/
+*.pyc
+.env

@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FaceWatch — Setup</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #181818;
+    --border: #222222;
+    --border2: #2a2a2a;
+    --accent: #00ff87;
+    --accent-dim: rgba(0,255,135,0.10);
+    --text: #f0f0f0;
+    --text-dim: #555;
+    --text-mid: #888;
+    --red: #ff4444;
+    --radius: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 48px 20px;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 36px;
+  }
+
+  .logo-dot {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  .logo-text {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .logo-sub {
+    font-size: 12px;
+    color: var(--text-mid);
+    margin-left: 4px;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    color: var(--text-mid);
+    font-size: 13px;
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+
+  .section {
+    margin-bottom: 32px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .camera-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 10px;
+  }
+
+  .camera-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .camera-card-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .remove-btn {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: color 0.15s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .remove-btn:hover { color: var(--red); }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .field-row.single { grid-template-columns: 1fr; }
+  .field-row.triple { grid-template-columns: 1fr 1fr 80px; }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  input, select {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    padding: 9px 12px;
+    outline: none;
+    transition: border-color 0.15s;
+    width: 100%;
+  }
+
+  input:focus, select:focus {
+    border-color: rgba(0,255,135,0.4);
+  }
+
+  input::placeholder { color: var(--text-dim); }
+  select option { background: var(--surface2); }
+
+  .checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  input[type="checkbox"] {
+    width: 14px; height: 14px;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+
+  .checkbox-label {
+    font-size: 12px;
+    color: var(--text-mid);
+    cursor: pointer;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+
+  .add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 10px;
+    border: 1px dashed var(--border2);
+    border-radius: var(--radius);
+    background: none;
+    color: var(--text-mid);
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.15s;
+    margin-top: 4px;
+  }
+
+  .add-btn:hover {
+    border-color: rgba(0,255,135,0.3);
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  .test-btn {
+    background: none;
+    border: 1px solid var(--border2);
+    border-radius: var(--radius);
+    color: var(--text-mid);
+    font-size: 11px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .test-btn:hover { border-color: var(--border2); color: var(--text); background: var(--surface2); }
+
+  .test-result {
+    font-size: 11px;
+    margin-top: 6px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    display: none;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .test-result.ok { background: rgba(0,255,135,0.08); color: var(--accent); display: block; }
+  .test-result.fail { background: rgba(255,68,68,0.08); color: var(--red); display: block; }
+
+  .save-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 36px;
+  }
+
+  .save-btn {
+    flex: 1;
+    padding: 12px;
+    background: var(--accent);
+    border: none;
+    border-radius: var(--radius);
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: opacity 0.15s;
+  }
+
+  .save-btn:hover { opacity: 0.85; }
+
+  .save-status {
+    font-size: 12px;
+    color: var(--text-mid);
+  }
+
+  .save-status.ok { color: var(--accent); }
+  .save-status.fail { color: var(--red); }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 28px 0;
+  }
+
+  .info-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid rgba(0,255,135,0.4);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    font-size: 12px;
+    color: var(--text-mid);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .info-box code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--surface2);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 11px;
+    color: var(--text);
+  }
+
+  .goto-dash {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 16px;
+    border: 1px solid rgba(0,255,135,0.2);
+    border-radius: var(--radius);
+    background: var(--accent-dim);
+    transition: all 0.15s;
+  }
+
+  .goto-dash:hover { background: rgba(0,255,135,0.15); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="logo">
+    <div class="logo-dot"></div>
+    <span class="logo-text">FaceWatch</span>
+    <span class="logo-sub">Setup</span>
+  </div>
+
+  <h2>Configure your system</h2>
+  <p class="subtitle">Set up your cameras once here. Settings are saved to <code>config.json</code> — no code editing needed.</p>
+
+  <div class="info-box">
+    Find your camera's RTSP URL in its app or settings page. Tapo cameras use <code>rtsp://user:pass@IP:554/stream1</code>. PTZ control requires ONVIF — Tapo default port is <code>2020</code>.
+  </div>
+
+  <!-- CAMERAS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Cameras</div>
+    </div>
+
+    <div id="camera-list"></div>
+
+    <button class="add-btn" onclick="addCamera()">
+      + Add camera
+    </button>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RECOGNITION DEFAULTS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Recognition defaults</div>
+    </div>
+
+    <div class="camera-card">
+      <div class="field-row">
+        <div class="field">
+          <label>Detection sensitivity</label>
+          <input type="number" id="detection_threshold" value="0.60" min="0.1" max="1.0" step="0.05">
+        </div>
+        <div class="field">
+          <label>Recognition threshold</label>
+          <input type="number" id="recognition_threshold" value="0.65" min="0.1" max="1.0" step="0.05">
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--text-dim);margin-top:6px;">
+        Detection: lower = detects more faces. Recognition: higher = only very confident matches get a name.
+      </div>
+    </div>
+  </div>
+
+  <!-- SAVE -->
+  <div class="save-row">
+    <button class="save-btn" onclick="saveConfig()">Save and launch dashboard →</button>
+    <span class="save-status" id="save-status"></span>
+  </div>
+
+</div>
+
+<script>
+  let cameraCount = 0;
+
+  function addCamera(prefill = {}) {
+    cameraCount++;
+    const id = `cam${cameraCount}`;
+    const div = document.createElement("div");
+    div.className = "camera-card";
+    div.id = `card-${id}`;
+
+    div.innerHTML = `
+      <div class="camera-card-header">
+        <div class="camera-card-title">Camera ${cameraCount}</div>
+        <button class="remove-btn" onclick="removeCamera('${id}')">✕</button>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Display name</label>
+          <input type="text" id="${id}-name" placeholder="e.g. Room Camera" value="${prefill.name || ''}">
+        </div>
+        <div class="field">
+          <label>Camera ID</label>
+          <input type="text" id="${id}-id" placeholder="e.g. cam1" value="${prefill.id || id}">
+        </div>
+      </div>
+
+      <div class="field-row single">
+        <div class="field">
+          <label>RTSP stream URL</label>
+          <div style="display:flex;gap:8px;">
+            <input type="text" id="${id}-rtsp" placeholder="rtsp://user:pass@192.168.x.x:554/stream1" value="${prefill.rtsp || ''}">
+            <button class="test-btn" onclick="testRTSP('${id}')">Test</button>
+          </div>
+          <div class="test-result" id="${id}-rtsp-result"></div>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Fallback USB index</label>
+          <input type="number" id="${id}-fallback" value="${prefill.fallback ?? 0}" min="0" max="10" placeholder="0">
+        </div>
+      </div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="${id}-ptz" ${prefill.ptz ? 'checked' : ''} onchange="togglePTZ('${id}')">
+        <label class="checkbox-label" for="${id}-ptz">This camera has PTZ (pan/tilt)</label>
+      </div>
+
+      <div id="${id}-ptz-section" style="display:${prefill.ptz ? 'block' : 'none'}; margin-top:14px;">
+        <div class="field-row triple">
+          <div class="field">
+            <label>Camera IP</label>
+            <input type="text" id="${id}-ptz-ip" placeholder="192.168.x.x" value="${prefill.ptz_ip || ''}">
+          </div>
+          <div class="field">
+            <label>ONVIF port</label>
+            <input type="number" id="${id}-ptz-port" value="${prefill.ptz_port || 2020}" placeholder="2020">
+          </div>
+          <div class="field">
+            <label>User</label>
+            <input type="text" id="${id}-ptz-user" placeholder="admin" value="${prefill.ptz_user || ''}">
+          </div>
+        </div>
+        <div class="field-row single">
+          <div class="field">
+            <label>Password</label>
+            <input type="password" id="${id}-ptz-pass" placeholder="••••••••" value="${prefill.ptz_pass || ''}">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Pan speed (0.05–0.5)</label>
+            <input type="number" id="${id}-ptz-speed" value="${prefill.ptz_speed || 0.15}" min="0.05" max="0.5" step="0.05">
+          </div>
+          <div class="field">
+            <label>Scan pause (seconds)</label>
+            <input type="number" id="${id}-ptz-pause" value="${prefill.ptz_pause || 4}" min="1" max="30" step="1">
+          </div>
+        </div>
+        <div style="margin-top:8px;display:flex;justify-content:flex-end;">
+          <button class="test-btn" onclick="testPTZ('${id}')">Test PTZ connection</button>
+        </div>
+        <div class="test-result" id="${id}-ptz-result"></div>
+      </div>
+    `;
+
+    document.getElementById("camera-list").appendChild(div);
+  }
+
+  function removeCamera(id) {
+    document.getElementById(`card-${id}`)?.remove();
+  }
+
+  function togglePTZ(id) {
+    const checked = document.getElementById(`${id}-ptz`).checked;
+    document.getElementById(`${id}-ptz-section`).style.display = checked ? "block" : "none";
+  }
+
+  async function testRTSP(id) {
+    const url = document.getElementById(`${id}-rtsp`).value.trim();
+    const el = document.getElementById(`${id}-rtsp-result`);
+    el.className = "test-result";
+    el.textContent = "Testing...";
+    el.style.display = "block";
+
+    try {
+      const res = await fetch("/api/setup/test-rtsp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        el.className = "test-result ok";
+        el.textContent = `✓ Connected — ${data.resolution || "stream OK"}`;
+      } else {
+        el.className = "test-result fail";
+        el.textContent = `✗ Failed — ${data.error || "could not connect"}`;
+      }
+    } catch {
+      el.className = "test-result fail";
+      el.textContent = "✗ Server error";
+    }
+  }
+
+  async function testPTZ(id) {
+    const ip = document.getElementById(`${id}-ptz-ip`).value.trim();
+    const port = document.getElementById(`${id}-ptz-port`).value;
+    const user = document.getElementById(`${id}-ptz-user`).value.trim();
+    const pass = document.getElementById(`${id}-ptz-pass`).value;
+    const el = document.getElementById(`${id}-ptz-result`);
+
+    el.className = "test-result";
+    el.textContent = "Testing PTZ connection...";
+    el.style.display = "block";
+
+    try {
+      const res = await fetch("/api/setup/test-ptz", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ip, port: parseInt(port), user, password: pass })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        el.className = "test-result ok";
+        el.textContent = `✓ PTZ connected`;
+      } else {
+        el.className = "test-result fail";
+        el.textContent = `✗ ${data.error || "could not connect"}`;
+      }
+    } catch {
+      el.className = "test-result fail";
+      el.textContent = "✗ Server error";
+    }
+  }
+
+  function buildConfig() {
+    const cameras = {};
+    const ptz = {};
+
+    document.querySelectorAll(".camera-card").forEach(card => {
+      const base = card.id.replace("card-", "");
+      const camId = document.getElementById(`${base}-id`)?.value.trim() || base;
+      const name = document.getElementById(`${base}-name`)?.value.trim() || camId;
+      const rtsp = document.getElementById(`${base}-rtsp`)?.value.trim() || "";
+      const fallback = parseInt(document.getElementById(`${base}-fallback`)?.value || 0);
+      const hasPTZ = document.getElementById(`${base}-ptz`)?.checked;
+
+      cameras[camId] = { name, source: rtsp, fallback };
+
+      if (hasPTZ) {
+        ptz[camId] = {
+          name,
+          ip: document.getElementById(`${base}-ptz-ip`)?.value.trim() || "",
+          port: parseInt(document.getElementById(`${base}-ptz-port`)?.value || 2020),
+          user: document.getElementById(`${base}-ptz-user`)?.value.trim() || "",
+          password: document.getElementById(`${base}-ptz-pass`)?.value || "",
+          pan_speed: parseFloat(document.getElementById(`${base}-ptz-speed`)?.value || 0.15),
+          scan_pause: parseFloat(document.getElementById(`${base}-ptz-pause`)?.value || 4)
+        };
+      }
+    });
+
+    return {
+      cameras,
+      ptz,
+      settings: {
+        detection_threshold: parseFloat(document.getElementById("detection_threshold").value),
+        recognition_threshold: parseFloat(document.getElementById("recognition_threshold").value)
+      }
+    };
+  }
+
+  async function saveConfig() {
+    const config = buildConfig();
+    const statusEl = document.getElementById("save-status");
+
+    statusEl.textContent = "Saving...";
+    statusEl.className = "save-status";
+
+    try {
+      const res = await fetch("/api/setup/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(config)
+      });
+
+      if (res.ok) {
+        statusEl.textContent = "✓ Saved! Restarting...";
+        statusEl.className = "save-status ok";
+        setTimeout(() => { window.location.href = "/"; }, 1500);
+      } else {
+        statusEl.textContent = "✗ Save failed";
+        statusEl.className = "save-status fail";
+      }
+    } catch {
+      statusEl.textContent = "✗ Could not reach server";
+      statusEl.className = "save-status fail";
+    }
+  }
+
+  // Load existing config if any
+  async function loadExisting() {
+    try {
+      const res = await fetch("/api/setup/config");
+      if (!res.ok) { addCamera(); return; }
+      const config = await res.json();
+
+      if (config.cameras && Object.keys(config.cameras).length > 0) {
+        for (const [camId, cam] of Object.entries(config.cameras)) {
+          const ptz = config.ptz?.[camId];
+          addCamera({
+            id: camId,
+            name: cam.name,
+            rtsp: cam.source,
+            fallback: cam.fallback,
+            ptz: !!ptz,
+            ptz_ip: ptz?.ip,
+            ptz_port: ptz?.port,
+            ptz_user: ptz?.user,
+            ptz_pass: ptz?.password,
+            ptz_speed: ptz?.pan_speed,
+            ptz_pause: ptz?.scan_pause
+          });
+        }
+      } else {
+        addCamera();
+      }
+
+      if (config.settings) {
+        document.getElementById("detection_threshold").value = config.settings.detection_threshold || 0.6;
+        document.getElementById("recognition_threshold").value = config.settings.recognition_threshold || 0.65;
+      }
+    } catch {
+      addCamera();
+    }
+  }
+
+  loadExisting();
+</script>
+</body>
+</html>
