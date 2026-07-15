@@ -111,3 +111,7 @@ FaceWatch/
 ├── download_models.py      # Model downloader
 └── requirements.txt
 ```
+
+Demo Video:
+https://youtu.be/KZ1oUWJRmjw
+
